@@ -8,7 +8,7 @@ teacher_bp = Blueprint("teacher", __name__)
 
 @teacher_bp.route("/get", methods=["GET"])
 def get_teachers_route():
-    try:
+    try:        
         page     = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 10, type=int)
         search   = request.args.get('search', None)
