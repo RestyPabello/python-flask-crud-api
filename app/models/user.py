@@ -11,7 +11,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    roles = db.relationship('Role', back_populates='roles')
+    roles = db.relationship('Role', back_populates='users')
     
     def __repr__(self):
         return f"<User(id={self.id}, email='{self.email}')>"

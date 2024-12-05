@@ -11,7 +11,7 @@ class Role(db.Model):
     updated_at   = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     role_types = db.relationship('RoleType', back_populates='roles')
-    users      = db.relationship('User', back_populates='users')
+    users      = db.relationship('User', back_populates='roles')
     
     def __repr__(self):
         return f"<Role(id={self.id}, name='{self.name}')>"
