@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate, ValidationError
+from marshmallow import Schema, fields, validate, ValidationError, validates_schema
 
 def non_empty_string(value):
     if not value.strip():
@@ -34,7 +34,9 @@ class UserSchema(Schema):
         required=True,
         error_messages={"required": "Password confirmation is required."}
     )
-    def validate_passwords_match(self, value):
-        if value != self.context.get('password'):
-            raise ValidationError("Passwords do not match.")
+    
+    @validates_schema
+    def validate_passwords_match(self, data, **kwargs):
+        if data.get('password') != data.get('confirm_password'):
+            raise ValidationError({"confirm_password": "Passwords do not match."})
     
