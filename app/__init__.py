@@ -19,6 +19,6 @@ def create_app():
 
     app.register_blueprint(subject_bp, url_prefix='/api/subjects')
     app.register_blueprint(teacher_bp, url_prefix='/api/teachers')
-    # app.register_blueprint(user_bp, url_prefix='/api/users')
+    app.register_blueprint(user_bp, url_prefix='/api/users')
  
     return app
