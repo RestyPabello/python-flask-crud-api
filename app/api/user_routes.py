@@ -29,3 +29,26 @@ def register_user_route():
 
     except ValueError as error:
         return handle_error(400, error)
+    
+@user_bp.route("/login", methods=["POST"])
+def login_user_route():
+    data   = request.json
+    schema = LoginSchema()
+    
+    try:
+        validated_data = schema.load(data)
+        user           = login_user(validated_data)
+    
+        return jsonify({
+            "status_code": 200,
+            "data": {
+                "email": user.email,
+                "access_token": "Token here!"
+            }
+        }), 200
+        
+    except ValidationError as error:
+        return handle_error(400, error)
+
+    except ValueError as error:
+        return handle_error(400, error)
