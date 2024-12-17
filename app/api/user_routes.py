@@ -3,7 +3,7 @@ from app.services.user_service import *
 from marshmallow import ValidationError
 from app.schemas.user_schema import *
 from app.utils.helpers import handle_error
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import create_access_token
 
 user_bp = Blueprint("user", __name__)
 
@@ -39,12 +39,13 @@ def login_user_route():
     try:
         validated_data = schema.load(data)
         user           = login_user(validated_data)
+        access_token   = create_access_token(identity=user.id)
     
         return jsonify({
             "status_code": 200,
             "data": {
                 "email": user.email,
-                "access_token": "Token here!"
+                "access_token": access_token
             }
         }), 200
         

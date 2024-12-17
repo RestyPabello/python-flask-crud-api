@@ -8,6 +8,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG                          = False
     SQLALCHEMY_DATABASE_URI        = os.getenv("DATABASE_URL")
+    JWT_SECRET_KEY                 = os.getenv("JWT_SECRET_KEY", "default_secret_key")
 
     
 class DevelopmentConfig(Config):

@@ -9,10 +9,12 @@ from app.api.user_routes import user_bp
 import os
 
 def create_app():
-    env = os.getenv("FLASK_ENV", "development")
+    env            = os.getenv("FLASK_ENV", "development")
+    jwt_secret_key = os.getenv("JWT_SECRET_KEY", "default_secret_key")
 
     app = Flask(__name__)
     app.config.from_object(config[env]) 
+    app.config["JWT_SECRET_KEY"] = jwt_secret_key
     
     init_extensions(app)
     
