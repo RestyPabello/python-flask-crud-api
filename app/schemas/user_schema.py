@@ -1,4 +1,5 @@
-from marshmallow import Schema, fields, validate, ValidationError, validates_schema
+from marshmallow import Schema, fields, validate, ValidationError, validates_schema, validates
+from app.models.user import User
 
 def non_empty_string(value):
     if not value.strip():
@@ -35,8 +36,12 @@ class UserSchema(Schema):
         error_messages={"required": "Password confirmation is required."}
     )
     
+    @validates("email")
+    def validate_email_exists(self, value):
+        if User.query.filter_by(email=value).first():
+            raise ValidationError("Email already exists")
+
     @validates_schema
     def validate_passwords_match(self, data, **kwargs):
         if data.get('password') != data.get('confirm_password'):
             raise ValidationError({"confirm_password": "Passwords do not match."})
-    
