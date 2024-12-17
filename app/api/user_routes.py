@@ -3,6 +3,7 @@ from app.services.user_service import *
 from marshmallow import ValidationError
 from app.schemas.user_schema import *
 from app.utils.helpers import handle_error
+from flask_jwt_extended import jwt_required
 
 user_bp = Blueprint("user", __name__)
 
