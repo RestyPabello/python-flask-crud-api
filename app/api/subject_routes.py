@@ -3,10 +3,12 @@ from app.services.subject_service import *
 from marshmallow import ValidationError
 from app.schemas.subject_schema import SubjectSchema
 from app.utils.helpers import handle_error
+from flask_jwt_extended import jwt_required
 
 subject_bp = Blueprint("subject", __name__)
 
 @subject_bp.route("/add-subject", methods=["POST"])
+@jwt_required()
 def create_subject_route():
     data   = request.json
     schema = SubjectSchema()
@@ -30,6 +32,7 @@ def create_subject_route():
         return handle_error(400, error)
     
 @subject_bp.route("/update-subject/<int:subject_id>", methods=["PATCH"])
+@jwt_required()
 def update_subject_route(subject_id):
     data   = request.json
     schema = SubjectSchema()

@@ -3,10 +3,12 @@ from app.services.teacher_service import *
 from marshmallow import ValidationError
 from app.schemas.teacher_schema import *
 from app.utils.helpers import handle_error
+from flask_jwt_extended import jwt_required
 
 teacher_bp = Blueprint("teacher", __name__)
 
 @teacher_bp.route("/get", methods=["GET"])
+@jwt_required()
 def get_teachers_route():
     try:        
         page     = request.args.get('page', 1, type=int)
@@ -36,6 +38,7 @@ def get_teachers_route():
     
 
 @teacher_bp.route("/add-teacher", methods=["POST"])
+@jwt_required()
 def create_teacher_route():
     data   = request.json
     schema = TeacherSchema()
@@ -60,6 +63,7 @@ def create_teacher_route():
         return handle_error(400, error)
     
 @teacher_bp.route("/update-teacher/<int:teacher_id>", methods=["PUT"])
+@jwt_required()
 def update_teacher_route(teacher_id):
     data   = request.json
     schema = TeacherSchema()
