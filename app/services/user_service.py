@@ -1,6 +1,6 @@
 from app.models.user import User
 from app.extensions import db
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def register_user(validated_data):
@@ -21,5 +21,15 @@ def register_user(validated_data):
     db.session.commit()
     
     return new_user
+
+def login_user(validated_data):
+    email    = validated_data.get('email')
+    password = validated_data.get('password')
+    
+    user = User.query.filter_by(email=email).first()
+    if not user or not check_password_hash(user.password, password):
+        raise ValueError("Invalid email or password")
+     
+    return user
     
     

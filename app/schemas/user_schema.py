@@ -45,3 +45,18 @@ class UserSchema(Schema):
     def validate_passwords_match(self, data, **kwargs):
         if data.get('password') != data.get('confirm_password'):
             raise ValidationError({"confirm_password": "Passwords do not match."})
+        
+class LoginSchema(Schema):
+    email = fields.Email(
+        required=True, 
+        error_messages={
+            "required": "Email is required.", 
+            "invalid": "Invalid email format."
+        }
+    )
+    password = fields.String(
+        required=True,
+        error_messages={
+            "required": "Password is required."
+        }
+    )
