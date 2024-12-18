@@ -4,6 +4,7 @@ from marshmallow import ValidationError
 from app.schemas.user_schema import *
 from app.utils.helpers import handle_error
 from flask_jwt_extended import create_access_token
+from datetime import timedelta
 
 user_bp = Blueprint("user", __name__)
 
@@ -39,7 +40,7 @@ def login_user_route():
     try:
         validated_data = schema.load(data)
         user           = login_user(validated_data)
-        access_token   = create_access_token(identity=user.id)
+        access_token   = create_access_token(identity=user.id, expires_delta=timedelta(days=1))
     
         return jsonify({
             "status_code": 200,
