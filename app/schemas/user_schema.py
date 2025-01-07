@@ -60,3 +60,10 @@ class LoginSchema(Schema):
             "required": "Password is required."
         }
     )
+    
+class UserListSchema(Schema):
+    id         = fields.Integer(dump_only=True)
+    role_id    = fields.Integer()
+    email      = fields.Email(required=True)
+    created_at = fields.DateTime(format='%Y-%d-%m %H:%M:%S')
+    updated_at = fields.DateTime(format='%Y-%d-%m %H:%M:%S')
