@@ -31,5 +31,19 @@ def login_user(validated_data):
         raise ValueError("Invalid email or password")
      
     return user
+
+def get_users(page=1, per_page=10, search=None):
+    user_query = User.query
     
+    if search:
+        user_query = user_query.filter(
+            (User.name.ilike(f"%{search}%"))
+        )
+        
+    users = user_query.order_by(User.id).paginate(
+        page=page, per_page=per_page, error_out=False
+    )
+    
+    return users
+
     
