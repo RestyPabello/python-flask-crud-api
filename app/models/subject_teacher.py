@@ -15,3 +15,12 @@ class SubjectTeacher(db.Model):
     
     def __repr__(self):
         return f"<SubjectTeacher(subject_id={self.subject_id}, teacher_id={self.teacher_id})>"
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "subject_id": self.subject_id,
+            "teacher_id": self.teacher_id,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
