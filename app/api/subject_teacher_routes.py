@@ -28,3 +28,22 @@ def create_subject_teacher_route():
         
     except ValueError as error:
         return handle_error(400, error)
+    
+@subject_teacher_bp.route("/get", methods=["GET"])
+@jwt_required()
+def get_subjects_teachers_route():
+    try:  
+        page     = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        search   = request.args.get('search', None)
+        
+        subjects_teachers = get_subjects_teachers(page, per_page, search)
+        
+        return jsonify({
+            "status_code": 200,
+            "data": subjects_teachers["result"],  
+            "pagination": subjects_teachers["pagination"]
+        })
+        
+    except ValueError as error:
+        return handle_error(400, error)
