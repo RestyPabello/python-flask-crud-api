@@ -6,6 +6,7 @@ from app.models import Teacher, Subject # * or (Subject) specific model
 from app.api.subject_routes import subject_bp
 from app.api.teacher_routes import teacher_bp
 from app.api.user_routes import user_bp
+from app.api.subject_teacher_routes import subject_teacher_bp
 import os
 
 def create_app():
@@ -21,5 +22,6 @@ def create_app():
     app.register_blueprint(subject_bp, url_prefix='/api/subjects')
     app.register_blueprint(teacher_bp, url_prefix='/api/teachers')
     app.register_blueprint(user_bp, url_prefix='/api/users')
+    app.register_blueprint(subject_teacher_bp, url_prefix='/api/subject-teacher')
  
     return app
