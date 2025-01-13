@@ -47,3 +47,30 @@ def get_subjects_teachers_route():
         
     except ValueError as error:
         return handle_error(400, error)
+    
+@subject_teacher_bp.route("/update/<int:id>", methods=["PUT"])
+@jwt_required()
+def update_subject_teacher_route(id):
+    data       = request.json
+    data["id"] = id
+    
+    schema = SubjectTeacherSchemaID()
+
+    try:
+        validated_data = schema.load(data)
+        is_deleted     = validated_data.get("is_deleted")
+        
+        update_subject_teacher(id, is_deleted)
+        
+        return jsonify({
+            "status_code": 200,
+            "message": "Update successful"
+        }), 200
+    
+    except ValidationError as error:
+        return handle_error(400, error)
+
+    except ValueError as error:
+        return handle_error(400, error)
+    
+    

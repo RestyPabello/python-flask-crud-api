@@ -10,6 +10,8 @@ class SubjectTeacher(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
+    is_deleted = db.Column(db.Boolean, default=False, nullable=False)
+    
     subjects = db.relationship('Subject', back_populates='subject_teachers')
     teachers = db.relationship('Teacher', back_populates='subject_teachers') 
     
