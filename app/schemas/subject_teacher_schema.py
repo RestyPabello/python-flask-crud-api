@@ -14,3 +14,12 @@ class SubjectTeacherSchema(Schema):
         if not isinstance(value, int):
             raise ValidationError("Teacher ID must be an integer.")
         
+class SubjectTeacherSchemaID(Schema):
+    id = fields.Integer(
+        required=True,
+        error_messages={
+            "required": "SubjectTeacherID is required"
+        }    
+    )
+    is_deleted = fields.Boolean() 
+        

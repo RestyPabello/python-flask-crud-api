@@ -58,3 +58,12 @@ def get_subjects_teachers(page, per_page, search=None):
         "pagination": pagination
     }
     
+def update_subject_teacher(id, is_deleted):
+    subject_teacher = SubjectTeacher.query.get(id)
+    
+    if not subject_teacher:
+        raise ValueError("SubjectTeacher is not found")
+    
+    subject_teacher.is_deleted = is_deleted
+    
+    db.session.commit()
